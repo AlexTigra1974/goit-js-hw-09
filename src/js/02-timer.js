@@ -18,6 +18,7 @@ const dataSeconds = document.querySelector('[data-seconds]');
 // console.log(dataHours);
 // console.log(dataMinutes);
 // console.log(dataSeconds);
+let selectedDate;
 
 const options = {
   enableTime: true,
@@ -26,30 +27,30 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     console.log(selectedDates[0]);
-
-    if (selectedDates[0] <= new Date()) {
+    selectedDate = selectedDates[0];
+    if (selectedDate <= new Date()) {
       Notiflix.Notify.warning('Please choose a date in the future');
     } else {
       btnStart.disabled = false;
     }
-    btnStart.addEventListener('click', () => {
-      const intervalId = setInterval(() => {
-        const difTime = selectedDates[0] - Date.now();
-        if (difTime < 1000) {
-          clearInterval(intervalId);
-        }
-        const difTimeConvert = convertMs(difTime);
-        console.log(difTimeConvert);
-
-        dataDays.textContent = addLeadingZero(difTimeConvert.days);
-        dataHours.textContent = addLeadingZero(difTimeConvert.hours);
-        dataMinutes.textContent = addLeadingZero(difTimeConvert.minutes);
-        dataSeconds.textContent = addLeadingZero(difTimeConvert.seconds);
-      }, 1000);
-    });
   },
 };
 
+btnStart.addEventListener('click', () => {
+  const intervalId = setInterval(() => {
+    const difTime = selectedDate - Date.now();
+    if (difTime < 1000) {
+      clearInterval(intervalId);
+    }
+    const difTimeConvert = convertMs(difTime);
+    console.log(difTimeConvert);
+
+    dataDays.textContent = addLeadingZero(difTimeConvert.days);
+    dataHours.textContent = addLeadingZero(difTimeConvert.hours);
+    dataMinutes.textContent = addLeadingZero(difTimeConvert.minutes);
+    dataSeconds.textContent = addLeadingZero(difTimeConvert.seconds);
+  }, 1000);
+});
 flatpickr(input, options);
 
 btnStart.disabled = true;

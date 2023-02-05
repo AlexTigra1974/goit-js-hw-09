@@ -1,7 +1,7 @@
 import Notiflix from 'notiflix';
 
 const form = document.querySelector('.form');
-// console.log(form);
+console.dir(form);
 
 const inputDelay = document.querySelector('input[name = "delay"]');
 // console.log(inputDelay);
@@ -9,6 +9,7 @@ const inputStep = document.querySelector('input[name = "step"]');
 // console.log(inputStep);
 const inputAmount = document.querySelector('input[name = "amount"]');
 // console.log(inputAmount);
+const btn = document.querySelector('button');
 
 form.addEventListener('submit', e => {
   e.preventDefault();
@@ -30,6 +31,7 @@ form.addEventListener('submit', e => {
           `❌ Rejected promise ${position} in ${delay}ms`
         );
       });
+    btn.disabled = true;
   }
 });
 function createPromise(position, delay) {
